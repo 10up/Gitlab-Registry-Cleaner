@@ -2,16 +2,20 @@
 
 # # # # #
 #
-# This script connects to a Gitlab self-hosted instance and cleans a user specified container 
+# This script connects to a Gitlab self-hosted instance and cleans a user specified container
 # registry.  Gitlab has lifecycle rules for registries now, which can accomplish
 # much the same thing, but this script is useful when you want to bulk delete
-# items immediately.  
+# items immediately.
 #
-# Configure options for this script in the config.sh file.  A sample config file is provided. 
+# Configure options for this script in the config.sh file.  A sample config file is provided.
 #
-# Unknown if this works or applies to Gitlab.com. 
+# Unknown if this works or applies to Gitlab.com.
 #
-# Author:  10up Inc (https://10up.com)
+# Author:      10up, Inc.
+# Author URI:  https://10up.com
+# Version:     1.0.0
+# License:     MIT
+# License URI: https://opensource.org/licenses/MIT
 #
 # # # # #
 
@@ -37,52 +41,52 @@ fi
 
 # Check if the required variables are set, or if they are the default values
 if [ -z ${GITLAB_URL} ]
-then 
+then
   echo 'ERROR: Required variable GITLAB_URL not set in the config.sh file'
   exit 1
 fi
 if [ ${GITLAB_URL} == 'https://gitlab.example.com' ]
-then 
+then
   echo 'ERROR Required variable GITLAB_URL detected to be the default value in the config.sh file'
   exit 1
 fi
 if [ -z ${GITLAB_AUTH_TOKEN} ]
-then 
+then
   echo 'ERROR: Required variable GITLAB_AUTH_TOKEN not set in the config.sh file'
   exit 1
 fi
 if [ ${GITLAB_AUTH_TOKEN} == 'xxxxxxxxxxxxx' ]
-then 
+then
   echo 'ERROR: Required variable GITLAB_AUTH_TOKEN detected to be the default value in the config.sh file'
   exit 1
 fi
 if [ -z ${GITLAB_PROJECT_ID} ]
-then 
+then
   echo 'ERROR: Required variable GITLAB_PROJECT_ID not set in the config.sh file'
   exit 1
 fi
 if [ ${GITLAB_PROJECT_ID} == '<project-id-number>' ]
-then 
+then
   echo 'ERROR: Required variable GITLAB_PROJECT_ID detected to be the default value in the config.sh file'
   exit 1
 fi
 if [ -z ${GITLAB_REGISTRY_ID} ]
-then 
+then
   echo 'ERROR: Required variable GITLAB_REGISTRY_ID not set in the config.sh file'
   exit 1
 fi
 if [ ${GITLAB_REGISTRY_ID} == '<registry-id-number>' ]
-then 
+then
   echo 'ERROR: Required variable GITLAB_REGISTRY_ID detected to be the default value in the config.sh file'
   exit 1
 fi
 if [ -z ${EXPIRATION_DAYS} ]
-then 
+then
   echo 'ERROR: Required variable EXPIRATION_DAYS not set in the config.sh file'
   exit 1
 fi
 if [ ${EXPIRATION_DAYS} == '###' ]
-then 
+then
   echo 'ERROR: Required variable EXPIRATION_DAYS detected to be the default value in the config.sh file'
   exit 1
 fi
@@ -115,7 +119,7 @@ while [ ${nextpage} -gt 0 ]
 do
   echo "Getting image names page ${thispage}..."
   # add items to the array
-  oldifs="$IFS" 
+  oldifs="$IFS"
   IFS=$'\n'
   newimagenames=($(curl --silent --location --request GET "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/?per_page=500&page=${thispage}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}" | jq '.[].name'))
   oldifs="$IFS"
@@ -155,7 +159,7 @@ do
 
   # convert the tag date to seconds
   created_date_seconds=$( date -d "${created_date}" +%s )
-   
+
   # get today's date in seconds
   today_date=$( date +%s )
 
