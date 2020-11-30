@@ -194,14 +194,14 @@ do
       elif [[ -n "${INCLUDE_FOR_DELETION}" ]] && [[ ${imagename} =~ ${INCLUDE_FOR_DELETION} ]]
       then
         echo "** deleting image name ${imagename} created at ${created_date} as specified in user defined regex **"
-        if [ DRY_RUN != TRUE ]
+        if [ ${DRY_RUN} != "TRUE" ]
         then
           curl --silent --location --request DELETE "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/${imagename}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}"
         fi
       elif [[ -z "${EXCLUDE_FROM_DELETION}" ]] && [[ -z "${INCLUDE_FOR_DELETION}" ]]
       then
         echo "** deleting image name ${imagename} created at ${created_date} as no exclude or include regexes specified **"
-        if [ DRY_RUN != TRUE ]
+        if [ ${DRY_RUN} != "TRUE" ]
         then
           curl --silent --location --request DELETE "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/${imagename}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}"
         fi
@@ -211,7 +211,7 @@ do
         echo "** image ${imagename} ignored as it doesn't match the INCLUDE regex"
       else
         echo "** deleting image ${imagename} as the default policy"
-        if [ DRY_RUN != TRUE ]
+        if [ ${DRY_RUN} != "TRUE" ]
         then
           curl --silent --location --request DELETE "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/${imagename}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}"
         fi
