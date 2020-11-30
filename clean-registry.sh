@@ -123,7 +123,13 @@ do
   IFS=$'\n'
   newimagenames=($(curl --silent --location --request GET "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/?per_page=500&page=${thispage}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}" | jq '.[].name'))
   oldifs="$IFS"
-  imagenames=("${imagenames[@]-}" "${newimagenames[@]}")
+  
+  if [ ! -z "${newimagenames+x}" ]; then
+    imagenames=("${imagenames[@]-}" "${newimagenames[@]}")
+  else
+    echo "Nothing to remove"
+    exit 0
+  fi
 
   # Check if there's another page
   nextpage=$(curl -I --silent --location --request GET "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/?per_page=500&page=${thispage}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}" | grep -Fi X-Next-Page | sed -r 's/X-Next-Page:\ //' )
@@ -158,7 +164,14 @@ do
   created_date="${created_date#\"}"
 
   # convert the tag date to seconds
-  created_date_seconds=$( date -d "${created_date}" +%s )
+  if [[ "$(uname)" == "Darwin" ]]; then
+    # macOS uses BSD date, which doesn't understand -d so we tell it what format
+    # to convert from. It ignores the remaining data after seconds but issues a
+    # warning to stderr, we send it to /dev/null
+    created_date_seconds=$( date -j -f "%Y-%m-%dT%H:%M:%S" "${created_date}" +%s 2> /dev/null)
+  else
+    created_date_seconds=$( date -d "${created_date}" +%s )
+  fi
 
   # get today's date in seconds
   today_date=$( date +%s )
