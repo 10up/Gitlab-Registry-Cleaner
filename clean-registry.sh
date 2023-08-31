@@ -132,7 +132,7 @@ do
   fi
 
   # Check if there's another page
-  nextpage=$(curl -I --silent --location --request GET "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/?per_page=500&page=${thispage}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}" | grep -Fi X-Next-Page | sed -r 's/X-Next-Page:\ //' )
+  nextpage=$(curl -I --silent --location --request GET "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/?per_page=500&page=${thispage}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}" | grep -Fi X-Next-Page | sed -r 's/X-Next-Page:\ //i' )
   nextpage="${nextpage//[$'\t\r\n ']}" #clean the variable of extraneous characters
   if [ -z ${nextpage} ]
   then
