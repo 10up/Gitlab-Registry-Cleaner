@@ -2,7 +2,7 @@
 
 > Bash script using the GitLab API to delete images from a GitLab container registry. Supports regex and deleting images older than a specific age.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/Gitlab-Registry-Cleaner.svg)](https://github.com/10up/Gitlab-Registry-Cleaner/releases/latest) [![MIT License](https://img.shields.io/github/license/10up/Gitlab-Registry-Cleaner.svg)](https://github.com/10up/Gitlab-Registry-Cleaner/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/Gitlab-Registry-Cleaner.svg)](https://github.com/10up/Gitlab-Registry-Cleaner/releases/latest) [![MIT License](https://img.shields.io/github/license/10up/Gitlab-Registry-Cleaner.svg)](https://github.com/10up/Gitlab-Registry-Cleaner/blob/develop/LICENSE.md)
 
 ## How to Use
 Copy `config-sample.sh` to `config.sh` and fill in the variables to match the needs of your project.  The `config-sample.sh` file is documented with comments.  
@@ -35,7 +35,7 @@ GitLab does have an automatic [registry cleanup](https://docs.gitlab.com/ee/user
 
 ## Support Level
 
-**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future.  Bug reports, feature requests, questions, and pull requests are welcome.
+**Stable:** 10up is not planning to develop any new features for this, but will still respond to bug reports and security concerns. We welcome PRs, but any that include new features should be small and easy to integrate and should not include breaking changes. We otherwise intend to keep this tested up to the most recent version of WordPress.
 
 ## Changelog
 

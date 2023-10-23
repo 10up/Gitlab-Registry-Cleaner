@@ -30,7 +30,7 @@ The `develop` branch is the development branch which means it contains the next 
 
 1. Branch: Starting from `develop`, cut a release branch named `release/X.Y.Z` for your changes.
 2. Version bump: Bump the version number in `clean-registry.sh` if it does not already reflect the version being released.
-3. Changelog: Add/update the changelog in `CHANGELOG.md` and `readme.txt`.
+3. Changelog: Add/update the changelog in `CHANGELOG.md`.
 4. Props: update `CREDITS.md` with any new contributors, confirm maintainers are accurate.
 5. Readme updates: Make any other readme changes as necessary in `README.md`.
 6. Merge: Make a non-fast-forward merge from your release branch to `develop` (or merge the pull request), then do the same for `develop` into `trunk` (`git checkout trunk && git merge --no-ff develop`). `trunk` contains the stable development version.
