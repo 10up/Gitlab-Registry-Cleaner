@@ -13,7 +13,7 @@
 #
 # Author:      10up, Inc.
 # Author URI:  https://10up.com
-# Version:     1.0.0
+# Version:     1.0.2
 # License:     MIT
 # License URI: https://opensource.org/licenses/MIT
 #
@@ -123,7 +123,7 @@ do
   IFS=$'\n'
   newimagenames=($(curl --silent --location --request GET "${GITLAB_URL}/api/v4/projects/${GITLAB_PROJECT_ID}/registry/repositories/${GITLAB_REGISTRY_ID}/tags/?per_page=500&page=${thispage}" --header "Authorization: Bearer ${GITLAB_AUTH_TOKEN}" | jq '.[].name'))
   oldifs="$IFS"
-  
+
   if [ ! -z "${newimagenames+x}" ]; then
     imagenames=("${imagenames[@]-}" "${newimagenames[@]}")
   else
